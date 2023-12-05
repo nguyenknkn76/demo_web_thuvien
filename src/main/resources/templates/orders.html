@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
+
+</head>
+<body>
+
+    
+    <!-- ORDER TABLE -->
+    <div class="container">
+        
+        <div class="row mt-3">
+            <div>
+                <h1>Orders</h1>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Book Name</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Order data loop -->
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.bookname}"></td>
+                            <td th:text="${order.quantity}"></td>
+                            <td>
+                                <a th:href = @{/user/view/{id}(id=${order.bookid})} class="btn btn-success">View</a>
+                                <form th:action="@{/order/cancel}" method="post" onsubmit="return confirm('r u sure')">
+                                    <input type = "hidden" id = "id" th:name="id" th:value="${order.id}">
+                                    <button type = "submit" class = "btn  btn-danger">Cancel</button>
+                                </form>
+                            </td>
+                            <!-- <td>
+                                <button class="btn btn-primary" onclick="viewOrder(${order.id})">View</button>
+                                <button class="btn btn-danger" onclick="cancelOrder(${order.id})">Cancel</button>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- CANCEL TABLE -->
+            <h1> Cancel Orders</h1>
+            <div class="col-md-12">
+                <table class="table table-striped talbe mt-4">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Book Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Order data loop -->
+                        <tr th:each="order : ${canceledorders}">
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.bookname}"></td>
+                            <td th:text="${order.quantity}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="/logout" class="btn btn-primary btn2">Logout</a>
+                <a href="/user" class="btn btn-primary btn2">List Book</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
+
+

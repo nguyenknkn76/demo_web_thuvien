@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Information</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
+    <script src = "https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+    
+</head>
+<body>
+    <header>
+        <h1 class="text-center">Book Information</h1>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <div class="logo">
+                        <h1>Books</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wc">
+                        <a th:if="${loggedIn}">welcome</a>
+                        <a th:if="${loggedIn}" th:object="${book}" th:text="${user.name}"></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- <h1 class="text-center">Book Information</h1>
+        <div class ="row">
+            <a th:if="${loggedIn}">welcome</a>
+            <a th:if="${loggedIn}" th:object="${book}" th:text="${user.name}"></a>
+        </div> -->
+        <div class = "row">
+            <a th:if="${loggedIn}" th:href="@{/admin/new}"  class="btn btn-primary col-lg-12 btn2" >New Book</a>
+        </div>
+        
+        <table class="table mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th> 
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Publish Date</th>
+                    <th>Number of Pages</th>
+                    <th>Sold</th>
+                    <th th:if="${loggedIn}">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book:${books}">
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>                    
+                    <td th:text="${book.category}"></td>
+                    <td th:text="${book.publishdate}"></td>                       
+                    <td th:text="${book.numberofpage}"></td>                    
+                    <td th:text="${book.sold}"></td>                    
+                    <td th:if="${loggedIn}">
+                        <a th:href="@{/admin/view/{id}(id=${book.id})}" class="btn btn-info">View</a>
+                        <form th:action="@{/admin/delete}" method = "post" onsubmit="return confirm('r u sure')">
+                            <input type = "hidden" id = "id" name="id" th:name="id" th:value="${book.id}">
+                            <button type ="submit" class = "btn btn-danger">Delete</button>
+                        </form>
+                        <!-- <a th:href="@{/admin/delete/{id}(id={$book.id})}" class= "btn btn-danger" id = "deleteBtn" onclick="showConfirmation" type="button">Delete</a> -->
+                    </td>
+                </tr>
+                <!-- Add more book rows dynamically using Thymeleaf -->
+            </tbody>
+        </table>
+        <a th:unless="${loggedIn}" href="/login"  class="btn btn-primary btn2">Login</a>
+        <a th:if="${loggedIn}" href="/logout"  class="btn btn-primary btn2">Logout</a>
+    </div>   
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    
+
+</body>
+</html>

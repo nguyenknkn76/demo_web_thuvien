@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Information</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
+    <script src = "https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+    
+</head>
+<body>
+    <header>
+        <h1 class="text-center">Book Information</h1>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <div class="logo">
+                        <h1>Books</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wc">
+                        <a th:if="${loggedIn}">welcome</a>
+                        <a th:if="${loggedIn}" th:object="${book}" th:text="${user.name}"></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- <h2 class="text-center">Book Information</h2>
+        <div class ="row">
+            <a th:if="${loggedIn}">welcome</a>
+            <a th:if="${loggedIn}" th:object="${book}" th:text="${user.name}"></a>
+            <h1>Books</h1>
+        </div> -->
+        <table class="table mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Cover</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    
+                    <th th:if="${loggedIn}">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book:${books}">
+                    <td><img th:src="@{'/static/uploads/' + ${book.cover}}" width = "100px" height="150px"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>                                       
+                    <td th:if="${loggedIn}">
+                        <a th:href="@{/user/view/{id}(id=${book.id})}" class="btn btn-info">View</a>        
+                    </td>
+                </tr>
+                <!-- Add more book rows dynamically using Thymeleaf -->
+            </tbody>
+        </table>
+        <a th:unless="${loggedIn}" href="/login"  class="btn btn-primary btn2">Login</a>
+        <a th:if="${loggedIn}" href="/logout"  class="btn btn-primary btn2">Logout</a>
+        <a th:if="${loggedIn}" href="/orders"  class="btn btn-primary btn2">My Orders</a>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

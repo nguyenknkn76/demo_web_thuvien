@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Client Info</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
+
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Client Info</h2>
+        <form id="bookForm" th:object="${user}">
+        <!-- <form id="bookForm" th:object="${user}" th:action="@/qlsbedituser" method="POST" enctype="multipart/form-data"> -->
+
+            <div class="row">
+                <!-- Right column -->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="uName" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="uName" name="uName" th:value="${user.name}" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="uUsername" class="col-sm-2 col-form-label">Username:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="uUsername" name="uUsername" th:value="${user.username}" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="uPassword" class="col-sm-2 col-form-label">Password:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="uPassword" name="uPassword" th:value="${user.password}" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="uEmail" class="col-sm-2 col-form-label">Email:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="uEmail" name="uEmail" th:value="${user.email}" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="uRole" class="col-sm-2 col-form-label">Role:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="uRole" name="uRole" th:value="${user.role}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left column -->
+            </div>
+            <div class="row justify-content-center">
+                <button id="editBtn" class="btn btn-primary">Edit</button>
+                <button type="submit" id="saveBtn" class="btn btn-success" style="display: none;">Save</button>
+            </div>
+        </form>
+
+        <script>
+            var isEditMode = false;
+
+            // Edit button click event
+            document.getElementById("editBtn").addEventListener("click", function (event) {
+                event.preventDefault();
+
+                var editBtn = document.getElementById("editBtn");
+                var saveBtn = document.getElementById("saveBtn");
+
+                if (!isEditMode) {
+                    // Enable all fields
+                    enableFields();
+                    editBtn.innerHTML = "Cancel";
+                    saveBtn.style.display = "inline-block";
+                } else {
+                    // Disable all fields
+                    disableFields();
+                    editBtn.innerHTML = "Edit";
+                    saveBtn.style.display = "none";
+                }
+
+                isEditMode = !isEditMode;
+            });
+
+            // Enable all fields
+            function enableFields() {
+                document.getElementById("uName").disabled = false;
+                document.getElementById("uUsername").disabled = false;
+                document.getElementById("uPassword").disabled = false;
+                document.getElementById("uEmail").disabled = false;
+                document.getElementById("uRole").disabled = false;
+            }
+
+            // Disable all fields
+            function disableFields() {
+                document.getElementById("uName").disabled = true;
+                document.getElementById("uUsername").disabled = true;
+                document.getElementById("uPassword").disabled = true;
+                document.getElementById("uEmail").disabled = true;
+                document.getElementById("uRole").disabled = true;
+            }
+        </script>
+    </div>
+</body>
+</html>
